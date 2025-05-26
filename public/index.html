@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Store Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>General Store</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-section="home">Home</a></li>
+            <li><a href="#" data-section="products">Products</a></li>
+            <li><a href="#" data-section="cart">Cart <span class="cart-count">0</span></a></li>
+            <li><a href="#" data-section="orders">Orders</a></li>
+            <li><a href="#" data-section="employees">Employees</a></li>
+            <li><a href="#" data-section="suppliers">Suppliers</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Welcome to General Store</h2>
+                <p>Your one-stop shop for all your needs</p>
+            </div>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-store"></i>
+                    <h3>Total Stores</h3>
+                    <p id="total-stores">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <h3>Total Products</h3>
+                    <p id="total-products">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Total Employees</h3>
+                    <p id="total-employees">Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <div class="section-header">
+                <h2>Product Catalog</h2>
+                <button class="btn-primary" id="add-product-btn">Add New Product</button>
+            </div>
+            <div class="filters">
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="supplier-filter">
+                    <option value="">All Suppliers</option>
+                </select>
+                <input type="text" id="search-product" placeholder="Search products...">
+                <select id="sort-products">
+                    <option value="name">Sort by Name</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                </select>
+            </div>
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart" class="section">
+            <h2>Shopping Cart</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax (18%):</span>
+                        <span id="tax">₹0.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                    <button id="checkout-btn" class="btn-primary">Proceed to Checkout</button>
+                </div>
+            </div>
+            <!-- Checkout Form -->
+            <div id="checkout-form" class="checkout-form" style="display: none;">
+                <h3>Complete Your Purchase</h3>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax (18%):</span>
+                        <span id="tax">₹0.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total Amount:</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                </div>
+                <form id="order-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-name">Full Name</label>
+                            <input type="text" id="customer-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-email">Email Address</label>
+                            <input type="email" id="customer-email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-phone">Phone Number</label>
+                            <input type="tel" id="customer-phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-method">Payment Method</label>
+                            <select id="payment-method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="credit_card">Credit Card</option>
+                                <option value="debit_card">Debit Card</option>
+                                <option value="upi">UPI</option>
+                                <option value="net_banking">Net Banking</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-checkout">Cancel</button>
+                        <button type="submit" class="btn-primary">Place Order</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders" class="section">
+            <h2>Order History</h2>
+            <div class="orders-container" id="orders-container">
+                <!-- Orders will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Employees Section -->
+        <section id="employees" class="section">
+            <div class="section-header">
+                <h2>Employee Management</h2>
+                <button class="btn-primary" id="add-employee-btn">Add New Employee</button>
+            </div>
+            <div class="employee-filters">
+                <input type="text" id="search-employee" placeholder="Search employees...">
+                <select id="store-filter">
+                    <option value="">All Stores</option>
+                </select>
+            </div>
+            <div class="employees-grid" id="employees-container">
+                <!-- Employees will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Suppliers Section -->
+        <section id="suppliers" class="section">
+            <div class="section-header">
+                <h2>Supplier Management</h2>
+                <button class="btn-primary" id="add-supplier-btn">Add New Supplier</button>
+            </div>
+            <div class="supplier-filters">
+                <input type="text" id="search-supplier" placeholder="Search suppliers...">
+                <select id="city-filter">
+                    <option value="">All Cities</option>
+                </select>
+            </div>
+            <div class="suppliers-grid" id="suppliers-container">
+                <!-- Suppliers will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Quantity Dialog -->
+    <div id="quantity-dialog" class="modal">
+        <div class="modal-content quantity-dialog">
+            <span class="close">&times;</span>
+            <div class="dialog-header">
+                <h3>Add to Cart</h3>
+                <p class="dialog-subtitle">Select quantity and confirm your purchase</p>
+            </div>
+            <div class="product-preview">
+                <div class="product-image">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="product-details">
+                    <h4 id="dialog-product-name">Product Name</h4>
+                    <p class="product-category" id="dialog-product-category">Category</p>
+                    <p class="product-price" id="dialog-product-price">₹0.00</p>
+                </div>
+            </div>
+            <div class="quantity-form">
+                <div class="form-group">
+                    <label for="quantity">Select Quantity:</label>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" id="decrease-quantity" title="Decrease quantity">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" id="quantity" min="1" value="1">
+                        <button class="quantity-btn" id="increase-quantity" title="Increase quantity">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="stock-info">
+                    <i class="fas fa-box"></i>
+                    <div class="stock-details">
+                        <p>Available Stock: <span id="available-stock">0</span></p>
+                        <div class="stock-bar">
+                            <div class="stock-level" id="stock-level"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Unit Price:</span>
+                        <span id="dialog-unit-price">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Quantity:</span>
+                        <span id="dialog-quantity">1</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total Amount:</span>
+                        <span id="dialog-total">₹0.00</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancel-quantity">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="button" class="btn-primary" id="confirm-quantity">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Form -->
+    <div id="add-product-form" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Product</h2>
+            <form id="product-form">
+                <div class="form-group">
+                    <label for="product-name">Product Name</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-price">Price (₹)</label>
+                        <input type="number" id="product-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock">Initial Stock</label>
+                        <input type="number" id="product-stock" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <select id="product-category" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-supplier">Supplier</label>
+                        <select id="product-supplier" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="product-image">Product Image URL</label>
+                    <input type="url" id="product-image" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancel-product">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Employee Form -->
+    <div id="add-employee-form" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Employee</h2>
+            <form id="employee-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employee-first-name">First Name</label>
+                        <input type="text" id="employee-first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-last-name">Last Name</label>
+                        <input type="text" id="employee-last-name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="employee-email">Email</label>
+                    <input type="email" id="employee-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-phone">Phone</label>
+                    <input type="tel" id="employee-phone" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employee-position">Position</label>
+                        <select id="employee-position" required>
+                            <option value="">Select Position</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Sales Associate">Sales Associate</option>
+                            <option value="Cashier">Cashier</option>
+                            <option value="Inventory Specialist">Inventory Specialist</option>
+                            <option value="Store Assistant">Store Assistant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-salary">Salary (₹)</label>
+                        <input type="number" id="employee-salary" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="employee-store">Assigned Store</label>
+                    <select id="employee-store" required></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employee-street">Street Address</label>
+                        <input type="text" id="employee-street" required placeholder="Enter street address">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employee-city">City</label>
+                        <input type="text" id="employee-city" required placeholder="Enter city">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-pincode">Pincode</label>
+                        <input type="text" id="employee-pincode" required placeholder="Enter pincode">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancel-employee">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Supplier Form -->
+    <div id="add-supplier-form" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Supplier</h2>
+            <form id="supplier-form">
+                <div class="form-group">
+                    <label for="supplier-name">Company Name</label>
+                    <input type="text" id="supplier-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="supplier-contact">Contact Person</label>
+                    <input type="text" id="supplier-contact" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="supplier-email">Email</label>
+                        <input type="email" id="supplier-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-phone">Phone</label>
+                        <input type="tel" id="supplier-phone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="supplier-street">Street Address</label>
+                    <input type="text" id="supplier-street" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="supplier-city">City</label>
+                        <input type="text" id="supplier-city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-pincode">Pincode</label>
+                        <input type="text" id="supplier-pincode" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="supplier-categories">Supply Categories</label>
+                    <select id="supplier-categories" multiple required>
+                        <!-- Will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="supplier-notes">Additional Notes</label>
+                    <textarea id="supplier-notes" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancel-supplier">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Supplier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
